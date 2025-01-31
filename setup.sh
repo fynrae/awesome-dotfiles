@@ -9,16 +9,16 @@ makepkg -si || exit
 yay -S awesome-git || exit
 
 # Install FTLabs-Picom, rofi, cava, nvim, fastfetch, kitty, pywal, ...
-yay -S picom-ftlabs-git rofi cava nvim fastfetch kitty pywal feh xorg-server xorg-apps xorg xorg-xrdb xorg-docs xorg-xinput xmenu || exit
+yay -S picom-ftlabs-git rofi cava nvim fastfetch kitty pywal feh xorg-server xorg-apps xorg xorg-xrdb xorg-docs xorg-xinput xmenu alttab || exit
 
 # Copy and move Pictures folder (Wallpaper)
-cp -r Pictures ~/Pictures || exit
+cp -r Pictures ~/ || exit
 
 # Copy and move .config folder
-cp -r .config ~/.config || exit
+cp -r .config ~/ || exit
 
 # Copy and move .local folder
-cp -r .local ~/.local || exit
+cp -r .local ~/ || exit
 
 # Copy and move menu1.sh
 cp menu1.sh ~/menu1.sh || exit
