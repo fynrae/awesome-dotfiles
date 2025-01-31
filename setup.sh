@@ -1,5 +1,11 @@
 #!/bin/sh
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+# Copying widgets
+rmdir $SCRIPT_DIR/.config/awesome/awesome-wm-widgets
+git clone https://github.com/streetturtle/awesome-wm-widgets.git $SCRIPT_DIR/.config/awesome/awesome-wm-widgets
+
 # Install yay
 git clone https://aur.archlinux.org/yay.git
 cd yay || exit
