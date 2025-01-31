@@ -6,6 +6,9 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 rmdir $SCRIPT_DIR/.config/awesome/awesome-wm-widgets
 git clone https://github.com/streetturtle/awesome-wm-widgets.git $SCRIPT_DIR/.config/awesome/awesome-wm-widgets
 
+# Installing fonts
+sudo pacman -S $(pacman -Ssq ttf-)
+
 # Install yay
 git clone https://aur.archlinux.org/yay.git
 cd yay || exit
