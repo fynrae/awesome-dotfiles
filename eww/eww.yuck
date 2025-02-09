@@ -1,0 +1,264 @@
+;; WEATHER VAR
+(defpoll ICON :interval "15m" `scripts/weather.sh --icon`)
+(defpoll STAT :interval "15m" `scripts/weather.sh --stat`)
+(defpoll TEMP :interval "15m" `scripts/weather.sh --temp`)
+(defpoll HEX :interval "15m" `scripts/weather.sh --hex`)
+(defpoll QUOTE :interval "15m" `scripts/weather.sh --quote`)
+(defpoll QUOTE2 :interval "15m" `scripts/weather.sh --quote2`)
+
+;; BATTERY VAR
+(defpoll BATICON :interval "1s" `scripts/battery.sh icon`)
+(defpoll BATHEX :interval "60m" `scripts/battery.sh hex`)
+(defpoll STATUSHEX :interval "1s" `scripts/battery.sh statushex`)
+(defpoll CAPACITY :interval "10s" `scripts/battery.sh capacity`)
+(defpoll STATUS :interval "1s" `scripts/battery.sh status`)
+(defpoll UPTIME :interval "1s" `uptime -p | sed 's/up //'`)
+
+;; PROFILE VARS
+(defvar IMAGE "images/avatar.jpg")
+(defvar NAME "Fynrae Lovosta")
+(defpoll UNAME :interval "5m" `whoami`)
+
+;; CLOCK VARS
+(defpoll HOUR :interval "1m" `scripts/clock.sh h`)
+(defpoll MIN :interval "1m" `scripts/clock.sh m`)
+
+;; ACTION VAR
+(defvar ACTION "action")
+
+(defpoll CURRENTVOL :interval "1s" :initial "0" 
+  `scripts/currentvol.sh`)
+(defpoll CURRENTBRT :interval "1s" :initial "0" 
+  `scripts/currentbrt.sh`)
+
+;; VOLUME WIDGET
+(defwidget volume-widget []
+  (box :orientation "h" :class "slider" :spacing -150
+    (label :class "label_voltext":text "V")
+    (scale    :class "volslider"
+              :value CURRENTVOL
+              :width 175 
+              :max 101 
+              :min 0 
+              :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%" )))
+(defwidget brightness-widget []
+  (box :orientation "h" :class "slider" :spacing -150
+    (label :class "label_brttext":text "B")
+    (scale    :class "brtslider"
+              :value CURRENTBRT
+              :max 101 
+              :min 0 
+              :onchange "brightnessctl set {}%" )))
+;; POWER BUTTON WIDGET
+(defwidget powerbtn-widget []
+  (box :orientation "vertical" :class "power"
+    (button :class "power"
+            :onclick "eww close-all; eww update ACTION=poweroff; eww open prompt"
+            "󰐥")))
+
+(defwidget restart-widget []
+  (box :orientation "vertical" :class "power"
+    (button :class "power"
+            :onclick "eww close-all; eww update ACTION=reboot; eww open prompt"
+            "")))
+
+(defwidget sleep-widget []
+  (box :orientation "vertical" :class "power"
+    (button :class "power"
+            :onclick "eww close-all; eww update ACTION=sleep; eww open prompt"
+            "󰤄")))
+
+(defwidget logout-widget []
+  (box :orientation "vertical" :class "power"
+    (button :class "power"
+            :onclick "eww close-all; eww update ACTION=logout; eww open prompt"
+            "󰍃")))
+
+;; CLOCK WIDGET
+(defwidget clock-widget [] 
+	(box
+    :orientation "v"
+    :halign "start"
+    :valign "start"
+    (label :class "label_hour" :text HOUR)
+    (label :class "label_min" :text MIN)))
+;; BATTERY WIDGET
+(defwidget battery-widget [] 
+	(box :class "genwin" :vexpand true :hexpand true
+		(box :orientation "horizontal" :spacing 10 :space-evenly "false"  
+			(box :orientation "vertical" :vexpand true :hexpand true
+				(label :class "iconbattery" :xalign 0.3 :style "color: ${BATHEX};" :text BATICON))
+			(box :orientation "vertical" :spacing 10 :halign "center" :space-evenly "false" :vexpand true :hexpand true 
+				(label :class "label_capacity" :text CAPACITY)
+        (label :class "label_status" :style "color: ${STATUSHEX}" :text STATUS)
+				(label :class "label_uptime" :text "Uptime: ${UPTIME}")))))
+
+;; WEATHER WIDGET
+(defwidget weather-widget [] 
+	(box :class "genwin" 
+		(box :orientation "v" :spacing 10 :space-evenly "false" :vexpand "false" :hexpand "false" 
+			(box :orientation "h" :vexpand "false" :hexpand "false" 
+				(label :class "iconweather" :halign "start" :style "color: ${HEX};" :text ICON)
+				(label :class "label_temp" :halign "end" :text TEMP))
+			(box :orientation "v" :spacing 10 :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false" 
+				(label :class "label_stat" :text STAT)
+				(label :class "label_quote" :text QUOTE)
+				(label :class "label_quote" :text QUOTE2)))))
+
+;; PROFILE WIDGET
+(defwidget user [] 
+	(box :class "genwin" :orientation "v" :spacing 35 :space-evenly "false" :vexpand "false" :hexpand "false"
+		(box :style "background-image: url('${IMAGE}');" :class "face" :halign "center")
+		(label :class "fullname" :halign "center" :wrap "true" :limit-width 25 :text NAME)
+		(label :class "username" :halign "center" :wrap "true" :limit-width 25 :text "@${UNAME}")))
+
+;; PROFILE
+(defwindow profile
+  :monitor 0
+  :geometry (geometry :x "50px"
+                      :y "50px"
+                      :width "300px"
+                      :height "400px"
+                      )
+  :wm-ignore true
+  :focusable false
+  (user)
+)
+;; POWER OFF BUTTON
+(defwindow poweroff-btn
+  :monitor 0
+  :stacking "fg"
+  :geometry (geometry :x "1216px"
+                      :y "50px"
+                      :width "100px"
+                      :height "100px"
+                      )
+  :wm-ignore true
+  :focusable false
+  (powerbtn-widget)
+)
+;; RESTART BUTTON
+(defwindow restart-btn
+  :monitor 0
+  :geometry (geometry :x "1216px"
+                      :y "160px"
+                      :width "100px"
+                      :height "100px"
+                      )
+  :wm-ignore true
+  :focusable false
+  (restart-widget)
+)
+;; SLEEP BUTTON
+(defwindow sleep-btn
+  :monitor 0
+  :geometry (geometry :x "1106px"
+                      :y "160px"
+                      :width "100px"
+                      :height "100px"
+                      )
+  :wm-ignore true
+  :focusable false
+  (sleep-widget)
+)
+;; LOG OUT BUTTON
+(defwindow logout-btn
+  :monitor 0
+  :geometry (geometry :x "1106px"
+                      :y "50px"
+                      :width "100px"
+                      :height "100px"
+                      )
+  :wm-ignore true
+  :focusable false
+  (logout-widget)
+)
+;; BATTERY
+(defwindow battery
+  :monitor 0
+  :geometry (geometry :x "50px"
+                      :y "460px"
+                      :width "300px"
+                      :height "258px"
+                      )
+  :wm-ignore true
+  :focusable false
+  (battery-widget)
+)
+;; WEATHER
+(defwindow weather
+  :monitor 0
+  :geometry (geometry :x "360px"
+                      :y "50px"
+                      :width "526px"
+                      :height "300px"
+                      )
+  :wm-ignore true
+  :focusable false
+  (weather-widget)
+)
+;; CLOCK
+(defwindow clock
+  :monitor 0
+  :geometry (geometry :x "896px"
+                      :y "50px"
+                      :width "200px"
+                      :height "300px"
+                      )
+  :wm-ignore true
+  :focusable false
+  (clock-widget)
+)
+
+;; VOLUME
+(defwindow volume
+  :monitor 0
+  :geometry (geometry :x "1106px"
+                      :y "270px"
+                      :width "210px"
+                      :height "35px"
+                      )
+  :wm-ignore true
+  :focusable false
+  (volume-widget)
+)
+
+;; BRIGHTNESS
+(defwindow brightness
+  :monitor 0
+  :geometry (geometry :x "1106px"
+                      :y "315px"
+                      :width "210px"
+                      :height "35px"
+                      )
+  :wm-ignore true
+  :focusable false
+  (brightness-widget)
+)
+
+;; --- CONFIRM PROMPT FOR POWER OPTIONS ---
+(defwidget confirm-widget [] 
+	(box :class "confirm" :vexpand true :hexpand true
+		(box :orientation "horizontal" :spacing 10 :space-evenly "false"  
+			(box :orientation "vertical" :spacing 10 :halign "center" :space-evenly "false" :vexpand true :hexpand true 
+				(label :class "label_text" :text "Are you sure?")
+        (button :class "power"
+            :onclick "scripts/prompt.sh ${ACTION} yes"
+            "Hell Yeah!")
+        (button :class "power"
+                :onclick "eww close prompt; ./test_dashboard.sh"
+            "Hell naw!")
+      ))))
+
+(defwindow prompt
+  :monitor 0
+  :geometry (geometry :x "0px"
+                      :y "0px"
+                      :width "500px"
+                      :height "300px"
+                      :anchor "center"
+                      )
+  :wm-ignore true
+  :focusable false
+  (confirm-widget)
+)

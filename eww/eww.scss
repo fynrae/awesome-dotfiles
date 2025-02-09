@@ -1,0 +1,168 @@
+@import './../../.cache/wal/colors.scss';
+
+* {
+	all: unset;
+  }
+
+.profile,
+.poweroff-btn,
+.restart-btn,
+.sleep-btn,
+.logout-btn,
+.battery,
+.weather,
+.clock {
+	background-color: $background;
+    border-radius: 16px;
+}
+
+.iconweather {
+	font-family: Iosevka Nerd Font;
+	font-size : 120px;
+	color: $color1;
+	font-weight : normal;
+	margin : 15px 0px 0px 30px;
+}
+
+.label_temp {
+	color : $color2;
+	font-size : 80px;
+	font-weight : bold;
+	margin : -15px 30px 0px 0px;
+}
+
+.label_stat {
+	color : $color2;
+	font-size : 38px;
+	font-weight : bold;
+}
+
+.label_quote {
+	color : #E5E5E5;
+	font-size : 18px;
+	font-weight : normal;
+}
+.face {
+	background-size: 200px;
+	min-height: 200px;
+	min-width: 200px;
+	margin: 65px 0px 0px 0px;
+	border-radius: 100%;
+}
+
+.fullname {
+	color: $color2;
+	font-size : 30px;
+	font-weight : bold;
+}
+
+.username {
+	color: $color15;
+	font-size : 22px;
+	font-weight : bold;
+	margin : -15px 0px 0px 0px;
+}
+
+.iconbattery {
+	font-family: Hack Nerd Font;
+	font-size : 120px;
+	color: #000000;
+	font-weight : normal;
+	margin : 0px 120px 0px 20px;;
+}
+
+.label_capacity {
+	font-family: Iosevka;
+	font-size : 50px;
+	font-weight : bolder;
+	margin :75px 0px 0px -150px;
+}
+
+.label_status {
+	font-family: Hack Nerd Font;
+	font-size : 18px;
+	font-weight : bolder;
+	margin : 15px -150px 0px -300px;;
+}
+
+.label_uptime {
+	font-family: Hack Nerd Font;
+	font-size : 16px;
+	font-weight : normal;
+	margin : 30px -200px 0px -460px;
+}
+
+.label_hour {
+	font-family: Iosevka;
+	font-weight : bold;
+	font-size : 80px;
+	margin: 40px 0px 0px -20px;
+}
+
+.label_min {
+	font-family: Prisma;
+	color: $color3;
+	font-size : 80px;
+	margin: 0px 0px 0px 70px;
+}
+
+.power {
+	color: $color1;
+	font-size: 60px;
+}
+.power:hover {
+	color: $color14;
+}
+
+
+.prompt {
+	background-color: $background;
+	border-radius: 16px;
+}
+.label_text {
+	font-family: Iosevka;
+	font-size : 50px;
+	margin: 35px 0px 0px 0px;
+}
+
+.volume,
+.brightness {
+	background-color: $background;
+	border-radius: 16px;
+}
+
+trough highlight {
+  background-image: linear-gradient(to right, $color4 30%, $color10 50%, $color1 100% *50);
+  border-radius: 4px;
+}
+
+scale trough {
+  all: unset;
+  background-color: #2E3440;
+  box-shadow: 0 1px 2px 1px #06060b;
+  border-radius: 9px;
+  min-height: 8px;
+  min-width: 20px;
+  margin: 0px 10px 0px 5px;
+}
+
+slider{
+  border-radius: 10px;
+  background-color: #D8DEE9;
+  margin: -7px -7px -7px -7px;
+}
+
+.label_voltext {
+	font-family: Iosevka;
+	font-weight: bolder;
+	font-size: 14px;
+	color: $color5;
+	margin: 0px 140px 0px 0px;
+}
+.label_brttext {
+	font-family: Iosevka;
+	font-weight: bolder;
+	font-size: 14px;
+	color: $color5;
+	margin: 0px 140px 0px 0px;
+}
